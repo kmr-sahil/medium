@@ -16,14 +16,16 @@ export const blogRouter = new Hono<{
 
 blogRouter.use('/*', async (c, next) => {
     const authHeader = c.req.header("authorization") || "";
+    console.log(authHeader)
     // Split the header to extract the token part
-    const token = authHeader.split(' ')[1]; // Assuming the header is "Bearer <token>"
-    if (!token) {
+    //const token = authHeader.split(' ')[1]; 
+    // Assuming the header is "Bearer <token>"
+    if (!authHeader) {
         c.status(403);
         return c.json({ message: "No token provided" });
     }
     try {
-        const user = await verify(token, c.env.JWT_SECRET);
+        const user = await verify(authHeader, c.env.JWT_SECRET);
         if (user) {
             c.set("userId", user.id); // Assuming 'id' is the property you expect
             await next();
@@ -40,14 +42,25 @@ blogRouter.use('/*', async (c, next) => {
 
 blogRouter.get('/bulk', async(c) => {
 	
-    const body = await c.req.json();
 	const prisma = new PrismaClient({
 		datasourceUrl: c.env.DATABASE_URL,
 	}).$extends(withAccelerate())
 
     try {
 
-        const blog = await prisma.blog.findMany()
+        const blog = await prisma.blog.findMany({
+            select:{
+                content: true,
+                title: true,
+                id: true,
+                published: true,
+                author: {
+                    select: {
+                        name: true
+                    }
+                }
+            }
+        })
 
         return c.json({ blog })
         
@@ -110,7 +123,7 @@ blogRouter.post('/', async(c) => {
             data:{
                 title: body.title,
                 content: body.content,
-                authorId: Number(authorId)
+                authorId: Number(authorId),
             }
         })
 

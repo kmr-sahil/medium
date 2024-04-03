@@ -21,6 +21,6 @@ model Blog {
   authorId    Int
   content     String
   title       String
-  published   Boolean   @default(false)
+  published   String
   author      User      @relation(fields: [authorId], references: [id])
 }
