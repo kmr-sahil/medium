@@ -5,7 +5,7 @@ import { useBlogs } from '../hooks'
 
 function Blogs() {
 
-  const {loading, blogs} = useBlogs()
+  const { loading, blogs } = useBlogs('bulk');
 
   if(loading) {
     return <div className=' mx-auto'>
@@ -21,6 +21,7 @@ function Blogs() {
       {blogs.map(blog => 
 
           <BlogCard  key={blog.id}
+                id={blog.id}
                 authorName={blog.authorName || "Anonyomous"}
                 title={blog.title}
                 content={blog.content}
