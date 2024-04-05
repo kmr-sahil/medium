@@ -5,6 +5,7 @@ import Signin from './pages/Signin'
 import Blogs from './pages/Blogs'
 import FullBlog from './pages/FullBlog'
 import CreateBlog from './pages/CreateBlog'
+import EditBlog from './pages/EditBlog'
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
           <Route path="/blog/" element={<Blogs />} />
           <Route path="/blog/:id" element={<FullBlog />} />
           <Route path="/create" element={<CreateBlog />} />
+          <Route path='/edit/:id' element = {<EditBlog />} />
         </Routes>
       </BrowserRouter>
     </>
