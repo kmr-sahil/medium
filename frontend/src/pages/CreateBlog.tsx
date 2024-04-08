@@ -1,10 +1,25 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Input from '../components/Input'
 import { CreateBlogInput } from '@sahilkmr/medium-common'
 import axios from 'axios'
 import { BACKEND_URL } from '../config'
+import { useNavigate } from 'react-router-dom'
 
 function CreateBlog() {
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+
+    const token = localStorage.getItem('medium_token') || false
+    if(!token) {
+      navigate("/signup")
+      return
+    }
+
+  },[])
+
+  
 
     const [blogInputs, setBlogInputs] = useState<CreateBlogInput>({
         title: "",
@@ -15,7 +30,7 @@ function CreateBlog() {
         try {
             const response = await axios.post(`${BACKEND_URL}/api/v1/blog`, blogInputs, {
                 headers: {
-                    Authorization: localStorage.getItem("token")
+                    Authorization: localStorage.getItem("medium_token")
                 }
             })
             console.log(response)

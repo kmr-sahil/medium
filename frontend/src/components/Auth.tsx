@@ -18,7 +18,7 @@ function Auth({type}: {type: "signup" | "signin"}) {
             const response =await axios.post(`${BACKEND_URL}/api/v1/user/${type == "signup" ? "signup" : "signin"}`, postInputs)
             const jwt = response.data.jwt
             console.log(response)
-            localStorage.setItem("token", jwt)
+            localStorage.setItem("medium_token", jwt)
         } catch (error) {
             console.log(error)
         }

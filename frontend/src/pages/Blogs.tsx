@@ -7,6 +7,8 @@ function Blogs() {
 
   const { loading, blogs } = useBlogs('bulk');
 
+  console.log(blogs)
+
   if(loading) {
     return <div className=' mx-auto'>
       loading..
@@ -22,10 +24,10 @@ function Blogs() {
 
           <BlogCard  key={blog.id}
                 id={blog.id}
-                authorName={blog.authorName || "Anonyomous"}
+                authorName={blog.author.name || "Anonyomous"}
                 title={blog.title}
                 content={blog.content}
-                publishedDate={blog.publishedDate}/>
+                published={blog.published}/>
       )}
       
       

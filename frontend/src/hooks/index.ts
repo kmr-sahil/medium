@@ -3,6 +3,8 @@ import { useEffect, useState } from "react"
 import { BACKEND_URL } from "../config"
 
 export interface Blog {
+    [x: string]: any;
+    published: string;
     id: string;
     authorName: string;
     title: string;
@@ -16,9 +18,12 @@ export const useBlogs = (id : string) => {
     const [blogs, setBlogs] = useState<Blog[]>([])
 
     useEffect(() => {
-        axios.get(`${BACKEND_URL}/api/v1/blog/${id == 'bulk' ? 'bulk' : id}`, {
+
+        const source = axios.CancelToken.source();
+
+        axios.get(`${BACKEND_URL}/api/v1/blog/${id == 'bulk' ? 'bulk' : `blog/${id}`}`, {
             headers: {
-                Authorization: localStorage.getItem("token")
+                Authorization: localStorage.getItem("medium_token")
             }
         })
         .then(response => {
@@ -30,6 +35,10 @@ export const useBlogs = (id : string) => {
             console.error("Error fetching blogs:", error);
             setLoading(false);
           });
+
+          return () => {
+            source.cancel();
+        };
     }, [])
 
     return {

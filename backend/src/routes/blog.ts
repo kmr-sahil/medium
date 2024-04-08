@@ -20,10 +20,17 @@ blogRouter.use('/*', async (c, next) => {
     // Split the header to extract the token part
     //const token = authHeader.split(' ')[1]; 
     // Assuming the header is "Bearer <token>"
-    if (!authHeader) {
-        c.status(403);
-        return c.json({ message: "No token provided" });
-    }
+    const currentPath = c.req.path;
+    console.log(currentPath)
+
+    if (currentPath === '/api/v1/blog/bulk' || currentPath.startsWith('/api/v1/blog/blog')) {
+        console.log("here")
+        await next();
+    } else {
+        if (!authHeader) {
+            c.status(403);
+            return c.json({ message: "No token provided" });
+        }
     try {
         const user = await verify(authHeader, c.env.JWT_SECRET);
         if (user) {
@@ -37,6 +44,7 @@ blogRouter.use('/*', async (c, next) => {
         // It's good to handle specific errors for better debugging and security practices
         return c.json({ message: "Invalid or expired token", error: error.message });
     }
+}
     
 })
 
@@ -72,9 +80,8 @@ blogRouter.get('/bulk', async(c) => {
 
 })
 
-blogRouter.get('/:id', async (c) => {
+blogRouter.get('/blog/:id', async (c) => {
 	const id = c.req.param('id')
-	console.log(id);
 	
 	const prisma = new PrismaClient({
 		datasourceUrl: c.env.DATABASE_URL,
@@ -86,7 +93,14 @@ blogRouter.get('/:id', async (c) => {
             where: {
                 id: Number(id)
             },
-        })
+            include: {
+                author: {
+                    select: {
+                        name: true
+                    }
+                }
+            }
+        });
 
         return c.json({
             blog
@@ -124,6 +138,7 @@ blogRouter.post('/', async(c) => {
                 title: body.title,
                 content: body.content,
                 authorId: Number(authorId),
+                published: new Date()
             }
         })
 

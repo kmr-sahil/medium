@@ -22,16 +22,17 @@ function FullBlog() {
     }
 
     const blog = blogsArray[0];
+    console.log(blog)
 
     return (
         <div className='w-[100%] p-[1rem]'>
             <Navbar />
             <BlogCard
                 id={blog.id}
-                authorName={blog.authorName || "Anonymous"}
+                authorName={blog.author.name || "Anonymous"}
                 title={blog.title}
                 content={blog.content}
-                publishedDate={blog.publishedDate}
+                published={blog.published}
             />
         </div>
   )

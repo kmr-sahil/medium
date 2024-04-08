@@ -6,10 +6,10 @@ interface BlogCardProps {
     authorName: string;
     title: string;
     content: string;
-    publishedDate: string;
+    published: string;
 }
 
-function BlogCard({authorName, title, content, publishedDate, id}: BlogCardProps) {
+function BlogCard({authorName, title, content, published, id}: BlogCardProps) {
     
   return (
     <Link to={`/blog/${id}`}>
@@ -17,7 +17,7 @@ function BlogCard({authorName, title, content, publishedDate, id}: BlogCardProps
             <div className="relative inline-flex items-center justify-center w-10 h-10 overflow-hidden bg-gray-100 rounded-full dark:bg-gray-600">
                 <span className="font-medium text-gray-600 dark:text-gray-300">{authorName[0]}</span>
             </div>
-                {authorName} . {publishedDate}
+                {authorName} . {published.split('T')[0]}
         </div>
         <h2 className='text-[1.5rem] font-bold'>
             {title}

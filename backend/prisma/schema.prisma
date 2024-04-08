@@ -21,6 +21,6 @@ model Blog {
   authorId    Int
   content     String
   title       String
-  published   String
+  published   DateTime  
   author      User      @relation(fields: [authorId], references: [id])
 }
