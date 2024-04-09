@@ -29,6 +29,7 @@ function FullBlog() {
             <Navbar />
             <BlogCard
                 id={blog.id}
+                type='full'
                 authorName={blog.author.name || "Anonymous"}
                 title={blog.title}
                 content={blog.content}

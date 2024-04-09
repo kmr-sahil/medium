@@ -23,6 +23,7 @@ function Blogs() {
       {blogs.map(blog => 
 
           <BlogCard  key={blog.id}
+                type='short'
                 id={blog.id}
                 authorName={blog.author.name || "Anonyomous"}
                 title={blog.title}

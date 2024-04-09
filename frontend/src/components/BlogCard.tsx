@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom';
 
 interface BlogCardProps {
+    type: string;
     id: string;
     authorName: string;
     title: string;
@@ -9,7 +10,7 @@ interface BlogCardProps {
     published: string;
 }
 
-function BlogCard({authorName, title, content, published, id}: BlogCardProps) {
+function BlogCard({type, authorName, title, content, published, id}: BlogCardProps) {
     
   return (
     <Link to={`/blog/${id}`}>
@@ -22,7 +23,7 @@ function BlogCard({authorName, title, content, published, id}: BlogCardProps) {
         <h2 className='text-[1.5rem] font-bold'>
             {title}
         </h2>
-        <p>{content}</p>
+        <p className={type == 'full' ? '' : 'truncate'}>{content}</p>
         <div>
             {`${Math.ceil(content.length / 100)} min`}
         </div>

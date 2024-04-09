@@ -1,28 +1,19 @@
 import React, { useEffect, useState } from 'react'
-import Input from '../components/Input'
 import { UpdateBlogInput } from '@sahilkmr/medium-common'
 import axios from 'axios'
 import { BACKEND_URL } from '../config'
 import { useNavigate, useParams } from 'react-router-dom'
-import { useBlogs } from '../hooks'
 
 function EditBlog() {
-
     const navigate = useNavigate();
-
-  useEffect(() => {
-
-    const token = localStorage.getItem('medium_token') || false
-    if(!token) {
-      navigate("/signup")
-      return
-    }
-
-  },[])
-
     const { id } = useParams<{ id: string }>();
+    const token = localStorage.getItem('medium_token') || false;
 
-    const { loading, blogs } = useBlogs(id || '');
+    useEffect(() => {
+        if (!token) {
+            navigate("/signup");
+        }
+    }, [token, navigate]);
 
     const [editInput, setEditInput] = useState<UpdateBlogInput>({
         title: '',
@@ -31,9 +22,18 @@ function EditBlog() {
     });
 
     useEffect(() => {
-        if (blogs) {
-            const blogsArray = Array.isArray(blogs) ? blogs : [blogs];
-            const blog = blogsArray[0];
+        async function getBlog() {
+            try {
+                const response = await axios.get(`${BACKEND_URL}/api/v1/blog/editcheck/${id}`, {
+                    headers: {
+                        Authorization: localStorage.getItem("medium_token")
+                    }
+                });
+                console.log(response.data.checkBlog);
+                const blogs = response.data.checkBlog
+
+                const blogsArray = Array.isArray(blogs) ? blogs : [blogs];
+                const blog = blogsArray[0];
 
             if (blog) {
                 setEditInput({
@@ -41,9 +41,18 @@ function EditBlog() {
                     content: blog.content,
                     id: Number(blog.id),
                 });
+            } else {
+              console.log("error happen")  
+            }
+            } catch (error) {
+                console.log("throw him")
+                console.log(error);
             }
         }
-    }, [blogs]);
+
+        getBlog()
+        
+    },[])
 
     const onUpdate = async () => {
         try {
@@ -53,17 +62,14 @@ function EditBlog() {
                 }
             });
             console.log(response);
+            navigate(`/blog/${editInput.id}`)
         } catch (error) {
             console.log(error);
         }
     };
 
-    if (loading) {
-        return <div className='mx-auto'>Loading...</div>;
-    }
-
-    if (!blogs) {
-        return <div className='mx-auto'>404...</div>;
+    if (!token) {
+        return <div className='mx-auto'>Redirecting to sign up...</div>;
     }
 
     return (

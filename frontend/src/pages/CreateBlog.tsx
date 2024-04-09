@@ -33,7 +33,8 @@ function CreateBlog() {
                     Authorization: localStorage.getItem("medium_token")
                 }
             })
-            console.log(response)
+            console.log(response.data.blog.id)
+            navigate(`/blog/${response.data.blog.id}`)
         } catch (error) {
             console.log(error)
         }

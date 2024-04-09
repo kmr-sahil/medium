@@ -142,7 +142,10 @@ blogRouter.post('/', async(c) => {
             }
         })
 
-        return c.text('blog posted')
+        return c.json({
+            message: 'Blog posted successfully',
+            blog
+        })
         
     } catch (error) {
 
@@ -152,9 +155,44 @@ blogRouter.post('/', async(c) => {
 
 })
 
+blogRouter.get('/editcheck/:id', async(c) => {
+    console.log("got it here")
+    const authorId = c.get("userId")
+    const id = c.req.param('id')
+
+    const prisma = new PrismaClient({
+		datasourceUrl: c.env.DATABASE_URL,
+	}).$extends(withAccelerate())
+
+    try {
+        const checkBlog = await prisma.blog.findFirst({
+            where: {
+                id: Number(id)
+            }
+        })
+
+        if(checkBlog?.authorId == Number(authorId)){
+            c.status(200)
+            return c.json({
+                checkBlog
+            })
+        } else {
+            c.status(403)
+            return c.json({
+                checkBlog: false
+            })
+        }
+    } catch (error) {
+        return c.text('Server error')
+    }
+
+
+})
+
 blogRouter.put('/', async(c) => {
 
 	const body = await c.req.json();
+    const authorId = c.get("userId")
 
     const {success} = updateBlogInput.safeParse(body)
 
@@ -171,17 +209,39 @@ blogRouter.put('/', async(c) => {
 
     try {
 
-        const blog = await prisma.blog.update({
+        const checkBlog = await prisma.blog.findFirst({
             where: {
                 id: body.id
-            },
-            data:{
-                title: body.title,
-                content: body.content
             }
         })
 
-        return c.text('blog posted')
+        console.log("here", authorId , checkBlog)
+
+        if(checkBlog?.authorId == Number(authorId) ){
+
+            const updatedBlog = await prisma.blog.update({
+                where: {
+                    id: body.id
+                },
+                data:{
+                    title: body.title,
+                    content: body.content
+                }
+            })
+
+            c.status(200)
+            return c.json({
+                status: true,
+                message: "Updated succesfully"
+            })
+
+        } else {
+            c.status(403)
+            return c.json({
+                status: false,
+                message: "Different author"
+            })
+        }
         
     } catch (error) {
 
