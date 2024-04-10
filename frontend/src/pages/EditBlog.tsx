@@ -45,7 +45,7 @@ function EditBlog() {
               console.log("error happen")  
             }
             } catch (error) {
-                console.log("throw him")
+                navigate('/')
                 console.log(error);
             }
         }
