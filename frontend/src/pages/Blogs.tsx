@@ -20,7 +20,7 @@ function Blogs() {
 
       <Navbar/>
 
-      <div className='w-[40rem] mx-auto flex flex-col gap-[1rem] justify-center items-start'>
+      <div className='max-w-[40rem] mx-auto flex flex-col gap-[1rem] justify-center items-start'>
 
       {blogs.map(blog => 
 

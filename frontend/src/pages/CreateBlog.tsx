@@ -42,7 +42,7 @@ function CreateBlog() {
 
   return (
     
-    <div className='p-[1rem] flex flex-col gap-[1rem] w-[40rem] mx-auto'>
+    <div className='p-[1rem] flex flex-col gap-[1rem] max-w-[40rem] mx-auto'>
 
         <h1 className='text-[2rem] font-bold'>Create your Blog</h1>
 

@@ -28,7 +28,7 @@ function FullBlog() {
         <div className='w-[100%] p-[1rem]'>
             <Navbar />
 
-          <div className='w-[40rem] mx-auto flex flex-col gap-[0.75rem] items-start'>
+          <div className='max-w-[40rem] mx-auto flex flex-col gap-[0.75rem] items-start'>
 
             <BlogCard
                 id={blog.id}

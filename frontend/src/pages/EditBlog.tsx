@@ -73,7 +73,7 @@ function EditBlog() {
     }
 
     return (
-        <div className='flex flex-col items-start justify-center gap-[1rem] w-[40rem] mx-auto pt-[2rem]'>
+        <div className='flex flex-col items-start justify-center gap-[1rem] max-w-[40rem] mx-auto pt-[2rem] p-[1rem]'>
             <h1 className='text-[2rem] font-bold'>Edit Blog</h1>
             <div className='flex flex-col gap-[0.25rem] w-[100%]'>
                 <label className='pl-[0.25rem]' htmlFor='title'>Title</label>
