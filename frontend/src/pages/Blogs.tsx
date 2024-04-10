@@ -20,16 +20,20 @@ function Blogs() {
 
       <Navbar/>
 
+      <div className='w-[40rem] mx-auto flex flex-col gap-[1rem] justify-center items-start'>
+
       {blogs.map(blog => 
 
-          <BlogCard  key={blog.id}
-                type='short'
-                id={blog.id}
-                authorName={blog.author.name || "Anonyomous"}
-                title={blog.title}
-                content={blog.content}
-                published={blog.published}/>
-      )}
+        <BlogCard  key={blog.id}
+              type='short'
+              id={blog.id}
+              authorName={blog.author.name || "Anonyomous"}
+              title={blog.title}
+              content={blog.content}
+              published={blog.published}/>
+        )}
+
+      </div>
       
       
     </div>

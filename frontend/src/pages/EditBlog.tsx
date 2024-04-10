@@ -73,9 +73,9 @@ function EditBlog() {
     }
 
     return (
-        <div>
-            <h1>Edit Blog</h1>
-            <div className='flex flex-col gap-[0.25rem]'>
+        <div className='flex flex-col items-start justify-center gap-[1rem] w-[40rem] mx-auto pt-[2rem]'>
+            <h1 className='text-[2rem] font-bold'>Edit Blog</h1>
+            <div className='flex flex-col gap-[0.25rem] w-[100%]'>
                 <label className='pl-[0.25rem]' htmlFor='title'>Title</label>
                 <input
                     className='border rounded-[4px] p-[0.5rem]'
@@ -83,9 +83,10 @@ function EditBlog() {
                     value={editInput.title}
                 />
             </div>
-            <div className='flex flex-col gap-[0.25rem]'>
+            <div className='flex flex-col gap-[0.25rem] w-[100%]'>
                 <label className='pl-[0.25rem]' htmlFor='title'>Content</label>
-                <input
+                <textarea
+                rows={4}
                     className='border rounded-[4px] p-[0.5rem]'
                     onChange={e => setEditInput({ ...editInput, content: e.target.value })}
                     value={editInput.content}

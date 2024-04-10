@@ -42,9 +42,9 @@ function CreateBlog() {
 
   return (
     
-    <div className='p-[1rem] flex flex-col gap-[1rem]'>
+    <div className='p-[1rem] flex flex-col gap-[1rem] w-[40rem] mx-auto'>
 
-        <h1>Create your Blog</h1>
+        <h1 className='text-[2rem] font-bold'>Create your Blog</h1>
 
         <Input label='Title' placeholder='enter title here' onChange={(e) => {
             setBlogInputs({
@@ -54,13 +54,15 @@ function CreateBlog() {
             
         }} />
 
-        <Input label='Content' type='textarea' placeholder='enter your content' onChange={(e) => {
-            setBlogInputs({
-                ...blogInputs,
-                content: e.target.value,
-            })
-            
-        }} />
+            <div className='flex flex-col gap-[0.25rem] w-[100%]'>
+                <label className='pl-[0.25rem]' htmlFor='title'>Content</label>
+                <textarea
+                rows={4}
+                    className='border rounded-[4px] p-[0.5rem]'
+                    placeholder='enter content'
+                    onChange={e => setBlogInputs({ ...blogInputs, content: e.target.value })}
+                />
+            </div>
 
         <button onClick={onPublish} className='px-[1rem] bg-green-600 text-white text-[18px] py-[0.5rem] rounded-full'>Publish</button>
         

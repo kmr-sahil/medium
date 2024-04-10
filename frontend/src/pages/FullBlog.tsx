@@ -1,5 +1,5 @@
 import React from 'react'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { useBlogs } from '../hooks'
 import Navbar from '../components/Navbar';
 import BlogCard from '../components/BlogCard';
@@ -27,6 +27,9 @@ function FullBlog() {
     return (
         <div className='w-[100%] p-[1rem]'>
             <Navbar />
+
+          <div className='w-[40rem] mx-auto flex flex-col gap-[0.75rem] items-start'>
+
             <BlogCard
                 id={blog.id}
                 type='full'
@@ -35,6 +38,12 @@ function FullBlog() {
                 content={blog.content}
                 published={blog.published}
             />
+
+            <Link to={`/edit/${id}`} className='bg-[#1313132b] px-[0.5rem]'>Edit</Link>
+
+          </div>
+
+            
         </div>
   )
 }
