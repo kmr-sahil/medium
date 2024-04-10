@@ -1,5 +1,5 @@
 import { SignupInput } from '@sahilkmr/medium-common'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import Input from './Input'
 import axios from 'axios'

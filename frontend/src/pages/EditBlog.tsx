@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { UpdateBlogInput } from '@sahilkmr/medium-common'
 import axios from 'axios'
 import { BACKEND_URL } from '../config'
